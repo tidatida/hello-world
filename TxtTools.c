@@ -1,7 +1,7 @@
 #include "TxtTools.h"
 #include <stdio.h>
 
-#define MAX_LINE 1000 /* you can use define here, but const int in c++ is better*/
+#define MAX_LINE 10000 /* you can use define here, but const int in c++ is better*/
 #define MAX_WORD 100
 
 int CountLines(char* FileName){ 
@@ -72,6 +72,48 @@ int DelBlankLines(char* srcFileName,char* desFileName){
   fclose(fpWrite);
   fclose(fpRead);
   return lineNum;
+}
+
+
+int SplitFile(char* srcFileName,char* desFileName)
+{
+	FILE *scrFileP,*desFileP; /* name of scrFileP is better than name of scrFileNameP, why ? */
+	char line[MAX_LINE]; /* don't use char Line[10000], 10000 is magic number,magic number is bad style */
+	int sectionNum=1; /* 1 is better */
+	int lineNum = 0;
+
+	lineNum = CountLines(srcFileName); /* CountLines is a function which we wrote before, use it here :) */
+	printf("There are %d lines in the %s file",lineNum,srcFileName);
+
+	scrFileP = fopen(srcFileName,"r");
+	desFileP = fopen(desFileName,"w");
+	
+	if (scrFileP == NULL){  /* This judgement is a code snippet, to test if a file is opened correctly*/
+		fprintf(stderr,"open file %s fail\n",srcFileName);
+		return -1;
+	}
+
+	if (desFileP == NULL){
+		fprintf(stderr,"open file %s fail\n",desFileName);
+		return -1;
+	}
+
+	while(fgets(line,MAX_LINE,scrFileP)!=NULL){
+    if (findSection(line)) {
+
+          fclose(desFileP);
+          sectionNum++;
+
+          makeStr(sectionNum);
+
+          desFileNameP=fopen(desFileName,"w");
+        }
+
+    fprintf(desFileP,"%s\n",Line);
+  }
+  fclose(scrFileP);
+  fclose(desFileP);
+
 }
 
 

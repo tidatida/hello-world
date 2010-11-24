@@ -28,9 +28,23 @@ int CountEnglishWords(char* FileName);
 */
 int DelBlankLines(char* srcFileName,char* desFileName);
 
+
+/*
+作用：
+		根据内容分割文件
+参数值：
+    源文件名和目标文件名
+返回值：
+    分割成几个文件，如果分割失败，返回-1
+*/
+int SplitFile(char* srcFileName,char* desFileName);
+
+
+
+
+
 /*
 作用：
 		实验用函数
 */
-
 void TestTxtTools(void);
