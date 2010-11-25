@@ -23,15 +23,29 @@ int GetName(char *whole,char* Name)
     int len;                               
     char *rname,*lname;                 /*name字符串的左边和右边*/
     lname=strrchr(whole,'/');		//已经在GetDir中说明	
-    lname++;				//多复制了'/'，所以指针向右移一位
-    rname=strrchr(whole,'.');		//拷贝拓展名
-    len=rname-lname;			//得到不含拓展名的文件名的长度
+	rname=strrchr(whole,'.');		//拷贝拓展名
+	if(lname != NULL)
+	{
+		lname++;				//多复制了'/'，所以指针向右移一位
+	    len=rname-lname;			//得到不含拓展名的文件名的长度
+	}
+	else
+	{
+		len=rname-whole;
+	}
+
 	if(NULL == Name) 
 	{ 
 		printf("Pointer is NULL @%s,%d",__FILE__,__LINE__); 
 		return -1;
 	}
-    strncpy(Name,lname,len);		//得到不含拓展名的文件名
+	if(lname != NULL)
+	{
+		strncpy(Name,lname,len);		//得到不含拓展名的文件名
+	}
+	else{
+		strncpy(Name,whole,len);
+	}
     Name[len]='\0';			//加上字符串结束符
     return len;				//返回文件名长度
 }
