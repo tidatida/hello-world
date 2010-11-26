@@ -87,6 +87,7 @@ int SplitFile(char* srcFileName,char* desFileName)
 	char num[10]; 
 	char di[3] = "第";
 	char hui[3] = "回";
+	char index[50] = "Part ";
 
 	int sectionNum=0; 
 	int lineNum = 0;
@@ -113,15 +114,15 @@ int SplitFile(char* srcFileName,char* desFileName)
 		strncpy(partLine,line,20);
 		partLine[20]='\0'; /* why I add zero here ?*/
 		if(strstr(partLine,di) && strstr(partLine,hui)){ /* to find '第' and '回' int the first 20 characters. */
-			fclose(desFileP);
+
+			
 			sectionNum++;
 			sprintf(num,"%d",sectionNum); /* change number to string */
-			GetName(desFileName,desName); /* to produce -1.txt, -2.txt, -3.txt */
-			strcat(desName,"-");
-			strcat(desName,num);
-			strcat(desName,".");
-			strcat(desName,desExt);
-			desFileP=fopen(desName,"w");
+			strcpy(index,"Part ");
+			strcat(index,num);
+			strcat(index,": ");
+			strcat(index,num);
+			fprintf(desFileP,"\n\n%s\n\n",index);
         }
     fprintf(desFileP,"%s\n",line);
   }
