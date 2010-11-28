@@ -31,17 +31,34 @@ int DelBlankLines(char* srcFileName,char* desFileName);
 
 /*
 作用：
-		根据内容分割文件
+		Insert "Chapter 1: " into the file according to content of file. 
+		This function can be used to format txt book for Stanza reader, 
+		which is the most popular reader in IPhone. 
+参数值：
+    源文件名, 目标文件名, name of book, author of book
+返回值：
+*/
+int InsertTagToFile(char* srcFileName,char* desFileName,char* bookTitle,char* bookAuthor);
+
+/*
+作用：
+		Split a big fine into some small file according to its content
 参数值：
     源文件名和目标文件名
 返回值：
-    分割成几个文件，如果分割失败，返回-1
 */
 int SplitFile(char* srcFileName,char* desFileName);
 
+/*
+Remarks:
+	Delete the space, tab in the two sides of the strSrc, and newline in the end of strSrc,
+and copy the result to strDes
 
+Return Value:
+	the length of strDes
 
-
+*/
+int Trim(char * strSrc, char* strDes)
 
 /*
 作用：

@@ -77,6 +77,70 @@ int DelBlankLines(char* srcFileName,char* desFileName){
 }
 
 
+int InsertTagToFile(char* srcFileName,char* desFileName,char* bookTitle,char* bookAuthor)
+{
+	FILE *scrFileP,*desFileP; /* name of scrFileP is better than name of scrFileNameP, why ? */
+	char line[MAX_LINE]; /* don't use char Line[10000], 10000 is magic number,magic number is bad style */
+	char partLine[30];
+	char desName[255];
+	char desExt[255];
+	char num[10]; 
+	char di[3] = "第";
+	char hui[3] = "回";
+	char tag[50] = "Chapter ";
+	char title[50] = "title";
+	char *presult ;
+
+	int sectionNum=0; 
+	int lineNum = 0;
+
+	lineNum = CountLines(srcFileName); /* CountLines is a function which we wrote before, use it here :) */
+	printf("There are %d lines in the %s file",lineNum,srcFileName);
+
+	scrFileP = fopen(srcFileName,"r");
+	desFileP = fopen(desFileName,"w");
+	GetName(desFileName,desName); /* get the name and extension of desFileName */
+	GetExt(desFileName,desExt);
+	
+	if (scrFileP == NULL){  /* This judgement is a code snippet, to test if a file is opened correctly*/
+		fprintf(stderr,"open file %s fail\n",srcFileName);
+		return -1;
+	}
+
+	if (desFileP == NULL){
+		fprintf(stderr,"open file %s fail\n",desFileName);
+		return -1;
+	}
+	fprintf(desFileP,"%s","Title: ");
+	fprintf(desFileP,"%s\n",bookTitle);
+	fprintf(desFileP,"%s","Author: ");
+	fprintf(desFileP,"%s\n",bookAuthor);
+
+	while(fgets(line,MAX_LINE,scrFileP)!=NULL){
+		strncpy(partLine,line,30);
+		partLine[29]='\0'; /* why I add zero here ?*/
+		if(strstr(partLine,di) && strstr(partLine,hui)){ /* to find '第' and '回' int the first 20 characters. */
+			
+			presult = strstr(partLine,hui);
+			if(presult != NULL)
+			{
+				strcpy(title,presult+2);
+				printf("%s",title);
+			}
+			sectionNum++;
+			sprintf(num,"%d",sectionNum); /* change number to string */
+			strcpy(tag,"Chapter ");
+			strcat(tag,num);
+			strcat(tag,": ");
+			strcat(tag,title);
+			fprintf(desFileP,"\n\n%s\n\n",tag);
+        }
+    fprintf(desFileP,"%s\n",line);
+  }
+  fclose(scrFileP); /* close files inthe end*/
+  fclose(desFileP);
+}
+
 int SplitFile(char* srcFileName,char* desFileName)
 {
 	FILE *scrFileP,*desFileP; /* name of scrFileP is better than name of scrFileNameP, why ? */
@@ -87,7 +151,9 @@ int SplitFile(char* srcFileName,char* desFileName)
 	char num[10]; 
 	char di[3] = "第";
 	char hui[3] = "回";
-	char index[50] = "Part ";
+	char tag[50] = "Chapter ";
+	char title[50] = "title";
+	char *presult ;
 
 	int sectionNum=0; 
 	int lineNum = 0;
@@ -110,19 +176,22 @@ int SplitFile(char* srcFileName,char* desFileName)
 		return -1;
 	}
 
-	while(fgets(line,MAX_LINE,scrFileP)!=NULL){
-		strncpy(partLine,line,20);
-		partLine[20]='\0'; /* why I add zero here ?*/
-		if(strstr(partLine,di) && strstr(partLine,hui)){ /* to find '第' and '回' int the first 20 characters. */
-
-			
+	while(fgets(line,MAX_LINE,scrFileP)!=NULL)
+	{
+		strncpy(partLine,line,30);
+		partLine[29]='\0'; /* why I add zero here ?*/
+		if(strstr(partLine,di) && strstr(partLine,hui)) /* to find '第' and '回' int the first 20 characters. */
+		{ 
+			fclose(desFileP);
 			sectionNum++;
 			sprintf(num,"%d",sectionNum); /* change number to string */
-			strcpy(index,"Part ");
-			strcat(index,num);
-			strcat(index,": ");
-			strcat(index,num);
-			fprintf(desFileP,"\n\n%s\n\n",index);
+
+			GetName(desFileName,desName);
+			strcat(desName,"-");
+			strcat(desName,num);
+			strcat(desName,".");
+			strcat(desName,desExt);
+			desFileP = fopen(desName,"w");
         }
     fprintf(desFileP,"%s\n",line);
   }
@@ -130,12 +199,20 @@ int SplitFile(char* srcFileName,char* desFileName)
   fclose(desFileP);
 }
 
+int Trim(char * strSrc, char* strDes)
+{
+	/* Please finish your code here and apply them to InsertTagToFile function
+}
+
 
 void TestTxtTools(void)
 {
-	char * FileName = "sdyxz.txt";
-	char * NewFileName = "sdyxz-ch.txt";
+	char *FileName = "sdyxz.txt";
+	char *NewFileName = "sdyxz-ch.txt";
+	char *bookTitle = "射雕英雄传";
+	char *bookAuthor = "金庸";
 	SplitFile(FileName,NewFileName);
+	InsertTagToFile(FileName,NewFileName,bookTitle,bookAuthor );
 	return ;
 
 
