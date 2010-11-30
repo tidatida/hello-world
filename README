@@ -34,6 +34,12 @@ Use the functions in the TxtTools.c and FileNameTools.c if it is possible.
 
 After finish this task, we will try more mobile phone programming. Hope you enjoy it. 
 
+2010/11/30
+1)finished two functions: InsertTagToFile and SplitFile. Students should take a deep look at these two functions and remember some useful code snippet.
+2) A new task, implement Trim function. 
+
+
+
 
 
 
