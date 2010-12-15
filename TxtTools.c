@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "FileNameTools.h"
+#include "myargs.h"
 
 #define MAX_LINE 10000 /* you can use define here, but const int in c++ is better*/
 #define MAX_WORD 100
@@ -201,18 +202,28 @@ int SplitFile(char* srcFileName,char* desFileName)
 
 int Trim(char * strSrc, char* strDes)
 {
-	/* Please finish your code here and apply them to InsertTagToFile function
+	/* Please finish your code here and apply them to InsertTagToFile function*/
 }
 
 
 void TestTxtTools(void)
 {
-	char *FileName = "sdyxz.txt";
-	char *NewFileName = "sdyxz-ch.txt";
-	char *bookTitle = "ÉäµñÓ¢ÐÛ´«";
-	char *bookAuthor = "½ðÓ¹";
-	SplitFile(FileName,NewFileName);
-	InsertTagToFile(FileName,NewFileName,bookTitle,bookAuthor );
+
+	char newFileName[250];
+	char oldFileName[250];
+	char author[250];
+	char title[250];
+	strcpy(oldFileName,files->filename[0]);
+	if(files->count >= 2)
+		strcpy(title,files->filename[1]);
+	if(files->count == 3)
+		strcpy(author,files->filename[2]);
+
+	if(i->count >0)
+	{
+		InsertPartToFile(oldFileName,"ch",newFileName);
+		InsertTagToFile(oldFileName,newFileName,title,author);
+	}
 	return ;
 
 

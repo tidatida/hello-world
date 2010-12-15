@@ -32,4 +32,11 @@ int GetName(char *whole,char* name);
 */
 int GetExt(char *whole,char* ext);
 
+
+/*
+remarks: you input oldFileName="demo.txt", and part="ch".The NewFileName will be "demo-ch.txt".
+it will insert string "ch" into the oldFileName between FileName and extension.
+*/
+void InsertPartToFile(char *oldFileName,char* part,char* NewFileName);
+
 void TestFileNameTools(void);

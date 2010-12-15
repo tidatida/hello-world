@@ -58,7 +58,7 @@ Return Value:
 	the length of strDes
 
 */
-int Trim(char * strSrc, char* strDes)
+int Trim(char * strSrc, char* strDes);
 
 /*
 ×÷ÓÃ£º
