@@ -2,12 +2,14 @@
 #include <stdio.h>
 #include "myargs.h"
 
+
 struct arg_lit *i, *s, *author;
 struct arg_str *keyword;
 struct arg_int *size;
 struct arg_lit *help,*version;
 struct arg_file *files;
 struct arg_end *end;
+
 
 void *argtable[8];
 
@@ -42,6 +44,11 @@ int ParseMyArgs(int argc, char *argv[])
     
     /* Parse the command line as defined by argtable[] */
     nerrors = arg_parse(argc,argv,argtable);
+	if(author->count >0)
+	{
+		printf("This software is developed by a teacher and some students\n");
+		printf("Detail can be found in README file");
+	}
 
     /* special case: '--help' takes precedence over error reporting */
     if (help->count > 0)

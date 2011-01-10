@@ -1,5 +1,4 @@
-#include<stdio.h>
-#include<string.h>
+
 /*
 参数值：
     whole：输入整体字符串, 例如："c:/system32/abc.txt"

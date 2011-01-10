@@ -1,6 +1,5 @@
 #include "TxtTools.h"
 #include <stdio.h>
-#include <string.h>
 #include "FileNameTools.h"
 #include "myargs.h"
 
@@ -75,6 +74,33 @@ int DelBlankLines(char* srcFileName,char* desFileName){
   fclose(fpWrite);
   fclose(fpRead);
   return lineNum;
+}
+
+string Trim(const string & AStr)
+{
+	//清除两侧<边界符>：空格，水平制表符，垂直制表符，换行，回车符
+	size_t mLen = AStr.length();
+	if (mLen == 0) return "";
+	int mbegin, mend ;
+
+	for (mbegin = 0 ; mbegin < mLen ; mbegin ++)  //
+	{
+		const char & mch = AStr[mbegin];
+		if ((mch != ' ') && (mch != '\n') 
+		   && (mch != '\r') && (mch != '\t') && (mch != '\v')) break;
+	}
+    if (mbegin == mLen) return "";  //全部是边界符，（jw）
+
+	for (mend = mLen - 1 ; mend >= 0 ; mend --)  //
+	{
+		const char & mch = AStr[mend];
+		if ((mch != ' ') && (mch != '\n') 
+		   && (mch != '\r') && (mch != '\t') && (mch != '\v')) break;
+	}
+
+	if (mend < 0) return "";  //全部是边界符，该情况，不会出现，因为，如果出现则（jw）处一定退出了
+
+	return AStr.substr(mbegin, mend - mbegin + 1);
 }
 
 
@@ -200,10 +226,7 @@ int SplitFile(char* srcFileName,char* desFileName)
   fclose(desFileP);
 }
 
-int Trim(char * strSrc, char* strDes)
-{
-	/* Please finish your code here and apply them to InsertTagToFile function*/
-}
+
 
 
 void TestTxtTools(void)

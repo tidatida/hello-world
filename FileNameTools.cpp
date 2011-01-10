@@ -1,6 +1,8 @@
 #include<stdio.h>
-#include<string.h>
+#include<string>
 #include"FileNameTools.h"
+using namespace std;
+
 int GetDir(char *whole,char* dir)
 { 
 	char *index;

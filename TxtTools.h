@@ -1,3 +1,7 @@
+#include <string>
+using namespace std;
+
+
 /*
 参数值：
     输入文件名
@@ -58,7 +62,7 @@ Return Value:
 	the length of strDes
 
 */
-int Trim(char * strSrc, char* strDes);
+string Trim(const string & AStr);
 
 /*
 作用：

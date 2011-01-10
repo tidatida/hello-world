@@ -1,7 +1,8 @@
 #include<stdio.h>
+#include<stdlib.h>
+#include "myargs.h"
 #include "FileNameTools.h"
 #include "TxtTools.h"
-#include "myargs.h"
 
 void main(int argc,char* argv[])
 {
@@ -27,6 +28,9 @@ void main(int argc,char* argv[])
 	{
 		printf("keyword=%s",keyword->sval[0]);
 	}
+
+	for (int j=0; j<files->count; j++)
+        printf("filename[%d] = \"%s\"\n", j, files->filename[j]);
 
 
 	//TestTxtTools();
