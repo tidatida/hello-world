@@ -4,6 +4,11 @@
 #include "FileNameTools.h"
 #include "TxtTools.h"
 
+/*
+ add some comment here. this is new modification from Texas. 11/18/2015 
+
+*/
+
 void main(int argc,char* argv[])
 {
 	//TestFileNameTools();
